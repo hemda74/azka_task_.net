@@ -1,0 +1,6 @@
+@task_amwag_HostAddress = http://localhost:5294
+
+GET {{task_amwag_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
