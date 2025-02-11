@@ -33,10 +33,40 @@ namespace task_amwag.Repositories
 
         public async Task UpdateEmployeeAsync(Employee employee)
         {
-            _context.Employees.Update(employee);
-            await _context.SaveChangesAsync();
-        }
+            try
+            {
+                Console.WriteLine($"Starting update for employee: {System.Text.Json.JsonSerializer.Serialize(employee)}");
 
+              
+                var existingEmployee = await _context.Employees.FindAsync(employee.Id);
+                if (existingEmployee == null)
+                {
+                    throw new Exception($"Employee with ID {employee.Id} not found");
+                }
+
+              
+                existingEmployee.Name = employee.Name;
+                existingEmployee.DateOfBirth = employee.DateOfBirth;
+                existingEmployee.Qualification = employee.Qualification;
+
+          
+                _context.Entry(existingEmployee).State = EntityState.Modified;
+
+
+                await _context.SaveChangesAsync();
+
+                Console.WriteLine($"Update completed successfully for employee ID: {employee.Id}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in UpdateEmployeeAsync: {ex}");
+                throw;
+            }
+        }
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await _context.Employees.CountAsync();
+        }
         public async Task DeleteEmployeeAsync(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
@@ -45,6 +75,11 @@ namespace task_amwag.Repositories
                 _context.Employees.Remove(employee);
                 await _context.SaveChangesAsync();
             }
+        }
+        public async Task<Employee> GetEmployeeByNameAsync(string name)
+        {
+            return await _context.Employees
+                .FirstOrDefaultAsync(e => e.Name.ToLower() == name.ToLower());
         }
         public async Task<IEnumerable<Employee>> GetPaginatedEmployeesAsync(int page, int pageSize)
         {

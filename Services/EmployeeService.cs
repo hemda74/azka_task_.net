@@ -1,4 +1,6 @@
 ﻿namespace task_amwag.Services;
+
+using Microsoft.EntityFrameworkCore;
 using task_amwag.Models;
 using task_amwag.Repositories;
 
@@ -9,6 +11,8 @@ public interface IEmployeeService
     Task AddEmployeeAsync(Employee employee);
     Task UpdateEmployeeAsync(Employee employee);
     Task DeleteEmployeeAsync(int id);
+    Task<int> GetTotalEmployeesCountAsync();
+    Task<Employee> GetEmployeeByNameAsync(string name);
 }
 
 public class EmployeeService : IEmployeeService
@@ -25,7 +29,18 @@ public class EmployeeService : IEmployeeService
     {
         return await _employeeRepository.GetPaginatedEmployeesAsync(page, pageSize);
     }
+    public async Task<int> GetTotalEmployeesCountAsync()
+    {
+        
+        return await _employeeRepository.GetTotalCountAsync();
+    }
 
+
+        public async Task<Employee> GetEmployeeByNameAsync(string name)
+        {
+            return await _employeeRepository.GetEmployeeByNameAsync(name);
+        }
+    
     public async Task<Employee> GetEmployeeByIdAsync(int id)
     {
         return await _employeeRepository.GetEmployeeByIdAsync(id);

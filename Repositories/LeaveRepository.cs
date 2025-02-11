@@ -27,11 +27,35 @@ namespace task_amwag.Repositories
             await _context.Leaves.AddAsync(leave);
             await _context.SaveChangesAsync();
         }
-
         public async Task UpdateLeaveAsync(Leave leave)
         {
-            _context.Leaves.Update(leave);
-            await _context.SaveChangesAsync();
+            try
+            {
+                Console.WriteLine($"Starting update for leave: {System.Text.Json.JsonSerializer.Serialize(leave)}");
+
+                var existingLeave = await _context.Leaves.FindAsync(leave.Id);
+                if (existingLeave == null)
+                {
+                    throw new Exception($"Leave with ID {leave.Id} not found");
+                }
+
+                existingLeave.StartDate = leave.StartDate;
+                existingLeave.Duration = leave.Duration;
+                existingLeave.LeaveType = leave.LeaveType;
+
+              
+                _context.Entry(existingLeave).State = EntityState.Modified;
+
+               
+                await _context.SaveChangesAsync();
+
+                Console.WriteLine($"Update completed successfully for leave ID: {leave.Id}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in UpdateLeaveAsync: {ex}");
+                throw;
+            }
         }
 
         public async Task DeleteLeaveAsync(int id)

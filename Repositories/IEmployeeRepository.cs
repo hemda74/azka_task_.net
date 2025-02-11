@@ -12,7 +12,9 @@ namespace task_amwag.Repositories
         Task UpdateEmployeeAsync(Employee employee);
         Task DeleteEmployeeAsync(int id);
         Task<IEnumerable<Employee>> GetPaginatedEmployeesAsync(int page, int pageSize);
-      
+        Task<int> GetTotalCountAsync();
+        Task<Employee> GetEmployeeByNameAsync(string name);
+
 
     }
 }

@@ -172,3 +172,4 @@ C:\Users\LENOVO\source\repos\task_amwag\obj\Debug\net8.0\task_amwag.pdb
 C:\Users\LENOVO\source\repos\task_amwag\obj\Debug\net8.0\task_amwag.genruntimeconfig.cache
 C:\Users\LENOVO\source\repos\task_amwag\obj\Debug\net8.0\ref\task_amwag.dll
 C:\Users\LENOVO\source\repos\task_amwag\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\LENOVO\source\repos\task_amwag\obj\Debug\net8.0\task_amwag.sourcelink.json

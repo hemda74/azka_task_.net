@@ -7,5 +7,5 @@
         public string Qualification { get; set; }
         public List<Leave> Leaves { get; set; } = new List<Leave>();
         public int TotalLeaveDays { get; set; }
-
+   
 }
